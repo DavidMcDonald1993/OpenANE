@@ -47,15 +47,15 @@ class Graph(object):
             self.G = nx.read_adjlist(path, create_using=nx.Graph())
         self.node_mapping()  # update node id index mapping
 
-    def read_edgelist(self, path, weighted=False, directed=False):
+    def read_edgelist(self, path, weighted=False, directed=False, delimiter="\t"):
         """ read edge list format graph; \n
             support (un)weighted and (un)directed graph; \n
             format: see https://networkx.github.io/documentation/stable/reference/readwrite/edgelist.html \n
         """
         if directed:
-            self.G = nx.read_edgelist(path, create_using=nx.DiGraph())
+            self.G = nx.read_weighted_edgelist(path, create_using=nx.DiGraph(), delimiter=delimiter)
         else:
-            self.G = nx.read_edgelist(path, create_using=nx.Graph())
+            self.G = nx.read_weighted_edgelist(path, create_using=nx.Graph(), delimiter=delimiter)
         self.node_mapping()  # update node id index mapping
 
     def add_edge_weight(self, equal_weight=1.0):
@@ -73,8 +73,8 @@ class Graph(object):
                                node_id2 attr1 attr2 ... attrM \n
         """
         with open(path, 'r') as fin:
-            for l in fin.readlines():
-                vec = l.split()
+            for l in fin.readlines()[1:]:
+                vec = l.split(",")
                 self.G.nodes[vec[0]]['attr'] = np.array([float(x) for x in vec[1:]])
 
     def remove_edge(self, ratio=0.0):

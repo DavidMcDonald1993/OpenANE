@@ -9,7 +9,7 @@ python src/main.py --method abrw
 
 by Chengbin HOU 2018 <chengbin.hou10@foxmail.com>
 '''
-
+import os
 import time
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 
@@ -122,6 +122,7 @@ def main(args):
     if is_ane:
         assert args.attribute_file != ''
         g.read_node_attr(args.attribute_file)
+
     # load node label info------
     t2 = time.time()
     print(f'STEP1: end loading data; time cost: {(t2-t1):.2f}s')
@@ -193,6 +194,9 @@ def main(args):
     print(f'STEP3: end learning embeddings; time cost: {(t2-t1):.2f}s')
 
     if args.save_emb:
+        if not os.path.exists(args.emb_file):
+            os.mkdir(args.emb_file, )
+        args.emb_file = os.path.join(args.emb_file, "embedding.csv")
         #model.save_embeddings(args.emb_file + time.strftime(' %Y%m%d-%H%M%S', time.localtime()))
         model.save_embeddings(args.emb_file)
         print(f'Save node embeddings in file: {args.emb_file}')

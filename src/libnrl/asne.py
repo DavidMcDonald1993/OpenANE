@@ -185,7 +185,7 @@ class ASNE(BaseEstimator, TransformerMixin):
         '''
         fout = open(filename, 'w')
         node_num = len(self.vectors.keys())
-        fout.write("{} {}\n".format(node_num, self.id_embedding_size+self.attr_embedding_size))
+        # fout.write("{} {}\n".format(node_num, self.id_embedding_size+self.attr_embedding_size))
         for node, vec in self.vectors.items():
             fout.write("{} {}\n".format(node, ' '.join([str(x) for x in vec])))
         fout.close()
