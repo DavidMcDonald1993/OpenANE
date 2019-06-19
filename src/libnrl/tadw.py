@@ -99,7 +99,7 @@ class TADW(object):
                 dt = rt + bt * dt
             self.H = np.reshape(vecH, (self.dim, self.feature_size))
             t2 = time.time()
-            print(f'iter: {i+1}/{self.maxiter}; time cost {t2-t1:0.2f}s')
+            # print(f'iter: {i+1}/{self.maxiter}; time cost {t2-t1:0.2f}s')
 
         self.Vecs = np.hstack((normalize(self.W.T), normalize(np.dot(self.T.T, self.H.T))))
         # get embeddings

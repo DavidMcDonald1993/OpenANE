@@ -106,7 +106,7 @@ def parse_args():
 
 def main(args):
     g = Graph()  # see graph.py for commonly-used APIs and use g.G to access NetworkX APIs
-    print(f'Summary of all settings: {args}')
+    print('Summary of all settings: {}'.format(args))
 
     # ---------------------------------------STEP1: load data-----------------------------------------------------
     print('\nSTEP1: start loading data......')
@@ -125,7 +125,7 @@ def main(args):
 
     # load node label info------
     t2 = time.time()
-    print(f'STEP1: end loading data; time cost: {(t2-t1):.2f}s')
+    # print(f'STEP1: end loading data; time cost: {(t2-t1):.2f}s')
 
     # ---------------------------------------STEP2: prepare data----------------------------------------------------
     print('\nSTEP2: start preparing data for link pred task......')
@@ -136,13 +136,13 @@ def main(args):
         edges_removed = g.remove_edge(ratio=args.link_remove)
         test_node_pairs, test_edge_labels = generate_edges_for_linkpred(graph=g, edges_removed=edges_removed, balance_ratio=1.0)
     t2 = time.time()
-    print(f'STEP2: end preparing data; time cost: {(t2-t1):.2f}s')
+    # print(f'STEP2: end preparing data; time cost: {(t2-t1):.2f}s')
 
     # -----------------------------------STEP3: upstream embedding task-------------------------------------------------
     print('\nSTEP3: start learning embeddings......')
-    print(f'the graph: {args.graph_file}; \nthe model used: {args.method}; \
-            \nthe # of edges used during embedding (edges maybe removed if lp task): {g.get_num_edges()}; \
-            \nthe # of nodes: {g.get_num_nodes()}; \nthe # of isolated nodes: {g.get_num_isolates()}; \nis directed graph: {g.get_isdirected()}')
+    # print(f'the graph: {args.graph_file}; \nthe model used: {args.method}; \
+            # \nthe # of edges used during embedding (edges maybe removed if lp task): {g.get_num_edges()}; \
+            # \nthe # of nodes: {g.get_num_nodes()}; \nthe # of isolated nodes: {g.get_num_isolates()}; \nis directed graph: {g.get_isdirected()}')
     t1 = time.time()
     model = None
     if args.method == 'abrw':
@@ -191,7 +191,7 @@ def main(args):
         print('method not found...')
         exit(0)
     t2 = time.time()
-    print(f'STEP3: end learning embeddings; time cost: {(t2-t1):.2f}s')
+    # print(f'STEP3: end learning embeddings; time cost: {(t2-t1):.2f}s')
 
     if args.save_emb:
         if not os.path.exists(args.emb_file):
@@ -199,7 +199,7 @@ def main(args):
         args.emb_file = os.path.join(args.emb_file, "embedding.csv")
         #model.save_embeddings(args.emb_file + time.strftime(' %Y%m%d-%H%M%S', time.localtime()))
         model.save_embeddings(args.emb_file)
-        print(f'Save node embeddings in file: {args.emb_file}')
+        # print(f'Save node embeddings in file: {args.emb_file}')
 
     # ---------------------------------------STEP4: downstream task-----------------------------------------------
     print('\nSTEP4: start evaluating ......: ')
@@ -208,20 +208,20 @@ def main(args):
     del model, g
     # ------lp task
     if args.task == 'lp' or args.task == 'lp_and_nc':
-        print(f'Link Prediction task; the percentage of positive links for testing: {(args.link_remove*100):.2f}%' + ' (by default, also generate equal negative links for testing)')
+        # print(f'Link Prediction task; the percentage of positive links for testing: {(args.link_remove*100):.2f}%' + ' (by default, also generate equal negative links for testing)')
         ds_task = lpClassifier(vectors=vectors)  # similarity/distance metric as clf; basically, lp is a binary clf probelm
         ds_task.evaluate(test_node_pairs, test_edge_labels)
     # ------nc task
     if args.task == 'nc' or args.task == 'lp_and_nc':
         X, Y = read_node_label_downstream(args.label_file)
-        print(f'Node Classification task; the percentage of labels for testing: {((1-args.label_reserved)*100):.2f}%')
+        # print(f'Node Classification task; the percentage of labels for testing: {((1-args.label_reserved)*100):.2f}%')
         ds_task = ncClassifier(vectors=vectors, clf=LogisticRegression())  # use Logistic Regression as clf; we may choose SVM or more advanced ones
         ds_task.split_train_evaluate(X, Y, args.label_reserved)
     t2 = time.time()
-    print(f'STEP4: end evaluating; time cost: {(t2-t1):.2f}s')
+    # print(f'STEP4: end evaluating; time cost: {(t2-t1):.2f}s')
 
 
 if __name__ == '__main__':
-    print(f'------ START @ {time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())} ------')
+    # print(f'------ START @ {time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())} ------')
     main(parse_args())
-    print(f'------ END @ {time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())} ------')
+    # print(f'------ END @ {time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())} ------')

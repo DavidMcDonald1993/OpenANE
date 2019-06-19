@@ -140,7 +140,7 @@ class AANE:
             self.U = self.U + self.H - self.Z
             self.updateH()
             t2 = time.time()
-            print(f'iter: {i+1}/{self.maxiter}; time cost {t2-t1:0.2f}s')
+            # print(f'iter: {i+1}/{self.maxiter}; time cost {t2-t1:0.2f}s')
 
         # -------save emb to self.vectors and return
         ind = 0

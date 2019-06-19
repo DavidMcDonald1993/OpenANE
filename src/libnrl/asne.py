@@ -25,7 +25,7 @@ class ASNE(BaseEstimator, TransformerMixin):
         t1 = time.time()
         X, nodes, id_N, attr_M, id_embedding_size, attr_embedding_size = format_data_from_OpenANE_to_ASNE(g=graph, dim=dim)
         t2 = time.time()
-        print(f'transform data format from OpenANE to ASNE; time cost: {(t2-t1):.2f}s')
+        # print(f'transform data format from OpenANE to ASNE; time cost: {(t2-t1):.2f}s')
 
         self.node_N = id_N  # n
         self.attr_M = attr_M  # m
@@ -146,7 +146,7 @@ class ASNE(BaseEstimator, TransformerMixin):
                     else:                              # training loss increasing
                         train_loss_keep_increasing += 1
                         if train_loss_keep_increasing > early_stopping:  # early stopping
-                            print(f'early stopping @ iter {iter_count}; take out embs and return')
+                            # print(f'early stopping @ iter {iter_count}; take out embs and return')
                             Embeddings_out = self.getEmbedding('out_embedding', self.nodes)
                             Embeddings_in = self.getEmbedding('embed_layer', self.nodes)
                             self.Embeddings = Embeddings_out + Embeddings_in  # simply mean them and as final embedding; try concat? to do...
@@ -158,9 +158,9 @@ class ASNE(BaseEstimator, TransformerMixin):
                         else:
                             pass
             t2 = time.time()
-            print(f'epoch @ {epoch+1}/{self.epoch}; time cost: {(t2-t1):.2f}s',)
+            # print(f'epoch @ {epoch+1}/{self.epoch}; time cost: {(t2-t1):.2f}s',)
 
-        print(f'finish all {self.epoch} epochs; take out embs and return')
+        # print(f'finish all {self.epoch} epochs; take out embs and return')
         Embeddings_out = self.getEmbedding('out_embedding', self.nodes)
         Embeddings_in = self.getEmbedding('embed_layer', self.nodes)
         self.Embeddings = Embeddings_out + Embeddings_in  # simply mean them and as final embedding; try concat? to do...
@@ -216,8 +216,8 @@ def format_data_from_OpenANE_to_ASNE(g, dim):
             X['data_label_list'].append(edge[0])
             X['data_attr_list'].append(attr_Matrix[g.look_up_dict[edge[1]]][:])
             cnt += 1
-    print(f'edges before doubling: {g.get_num_edges()}')
-    print(f'edges after doubling: {cnt}')
+    # print(f'edges before doubling: {g.get_num_edges()}')
+    # print(f'edges after doubling: {cnt}')
 
     X['data_id_list'] = np.array(X['data_id_list']).reshape(-1).astype(int)
     X['data_label_list'] = np.array(X['data_label_list']).reshape(-1, 1).astype(int)

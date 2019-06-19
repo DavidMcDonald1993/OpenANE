@@ -31,7 +31,7 @@ class WeightedWalker:
         self.preprocess_transition_probs()  # construct alias table; adapted from node2vec
         print('444')
         t2 = time.time()
-        print(f'Time for construct alias table: {(t2-t1):.2f}')
+        # print(f'Time for construct alias table: {(t2-t1):.2f}')
 
         walks = []
         nodes = [i for i in range(self.T.shape[0])]
@@ -41,7 +41,7 @@ class WeightedWalker:
             for node in nodes:
                 walks.append(self.weighted_walk(walk_length=walk_length, start_node=node))
             t2 = time.time()
-            print(f'Walk iteration: {walk_iter+1}/{num_walks}; time cost: {(t2-t1):.2f}')
+            # print(f'Walk iteration: {walk_iter+1}/{num_walks}; time cost: {(t2-t1):.2f}')
 
         for i in range(len(walks)):  # use ind to retrive original node ID
             for j in range(len(walks[0])):
@@ -121,7 +121,7 @@ class BasicWalker:
             for node in nodes:
                 walks.append(self.deepwalk_walk(walk_length=walk_length, start_node=node))
             t2 = time.time()
-            print(f'Walk iteration: {walk_iter+1}/{num_walks}; time cost: {(t2-t1):.2f}')
+            # print(f'Walk iteration: {walk_iter+1}/{num_walks}; time cost: {(t2-t1):.2f}')
         return walks
 
 
@@ -179,7 +179,7 @@ class Walker:
             for node in nodes:
                 walks.append(self.node2vec_walk(walk_length=walk_length, start_node=node))
             t2 = time.time()
-            print(f'Walk iteration: {walk_iter+1}/{num_walks}; time cost: {(t2-t1):.2f}')
+            # print(f'Walk iteration: {walk_iter+1}/{num_walks}; time cost: {(t2-t1):.2f}')
         return walks
 
     def get_alias_edge(self, src, dst):

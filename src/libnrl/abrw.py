@@ -68,7 +68,7 @@ class ABRW(object):
         X_sim = pairwise_similarity(X)  # attr similarity mat; X_sim is a square mat, but X is not
 
         t2 = time.time()
-        print(f'keep the top {self.topk} attribute similar nodes w.r.t. a node')
+        # print(f'keep the top {self.topk} attribute similar nodes w.r.t. a node')
         cutoff = np.partition(X_sim, -self.topk, axis=1)[:, -self.topk:].min(axis=1)
         X_sim[(X_sim < cutoff)] = 0  # improve both accuracy and efficiency
         X_sim = sparse.csr_matrix(X_sim)
@@ -77,7 +77,7 @@ class ABRW(object):
         T_X = row_as_probdist(X_sim)
 
         t4 = time.time()
-        print(f'attr sim cal time: {(t2-t1):.2f}s; topk sparse ops time: {(t3-t2):.2f}s; row norm time: {(t4-t3):.2f}s')
+        # print(f'attr sim cal time: {(t2-t1):.2f}s; topk sparse ops time: {(t3-t2):.2f}s; row norm time: {(t4-t3):.2f}s')
         del A, X, X_sim
 
         # =====================================information fusion via transition matrices========================================
@@ -87,7 +87,7 @@ class ABRW(object):
         alp[~np.asarray(T_A.sum(axis=1) != 0).ravel()] = 0
         T = sparse.diags(alp).dot(T_A) + sparse.diags(1 - alp).dot(T_X)  # sparse version
         t5 = time.time()
-        print(f'ABRW biased transition matrix processing time: {(t5-t4):.2f}s')
+        # print(f'ABRW biased transition matrix processing time: {(t5-t4):.2f}s')
         return T
 
     def save_embeddings(self, filename):

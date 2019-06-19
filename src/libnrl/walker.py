@@ -36,13 +36,13 @@ class WeightedWalker:
         t1 = time.time()
         self.preprocess_transition_probs(weighted_G=self.rec_G)  # construct alias table; adapted from node2vec
         t2 = time.time()
-        print(f'Time for construct alias table: {(t2-t1):.2f}')
+        # print(f'Time for construct alias table: {(t2-t1):.2f}')
 
         pool = multiprocessing.Pool(processes=self.workers)
         all_walks = pool.map(self.mp_rw_wrapper, range(self.num_walks))
         all_walks = list(chain(*all_walks))
         t3 = time.time()
-        print(f'Time for all random walks: {(t3-t2):.2f}')  # use multiple cores, total time < sum(time@itr)
+        # print(f'Time for all random walks: {(t3-t2):.2f}')  # use multiple cores, total time < sum(time@itr)
         
         for i in range(len(all_walks)):  # use ind to retrive original node ID
             for j in range(len(all_walks[0])):
