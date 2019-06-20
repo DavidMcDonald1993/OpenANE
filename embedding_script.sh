@@ -4,7 +4,7 @@
 
 days=3
 hrs=00
-mem=20G
+mem=10G
 
 e=100
 
@@ -13,7 +13,7 @@ for dataset in cora_ml citeseer ppi pubmed mit
 do
 	for dim in 5 10 25 50
 	do
-		for method in abrw attrpure node2vec tadw
+		for method in abrw attrpure deepwalk tadw aane 
 		do
 			for seed in {0..29}
 			do
