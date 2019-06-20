@@ -75,7 +75,7 @@ class Graph(object):
         with open(path, 'r') as fin:
             for l in fin.readlines()[1:]:
                 vec = l.split(",")
-                self.G.nodes[vec[0]]['attr'] = np.array([float(x) for x in vec[1:]])
+                self.G.node[vec[0]]['attr'] = np.array([float(x) for x in vec[1:]])
 
     def remove_edge(self, ratio=0.0):
         """ randomly remove edges/links \n
