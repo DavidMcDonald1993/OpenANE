@@ -4,7 +4,7 @@
 
 days=3
 hrs=00
-mem=10G
+mem=20G
 
 e=100
 
@@ -27,8 +27,8 @@ do
 				modules=$(echo \
 				module purge\; \
 				module load bluebear\; \
-				module load apps/python3/3.5.2\; \
-				module load apps/keras/2.0.8-python-3.5.2
+				module load Python/3.6.3-iomkl-2018a\; \
+				pip install --user gensim
 				)
 
 				slurm_options=$(echo \

@@ -195,7 +195,7 @@ def main(args):
 
     if args.save_emb:
         if not os.path.exists(args.emb_file):
-            os.mkdir(args.emb_file, )
+            os.makedirs(args.emb_file, exist_ok=True)
         args.emb_file = os.path.join(args.emb_file, "embedding.csv")
         #model.save_embeddings(args.emb_file + time.strftime(' %Y%m%d-%H%M%S', time.localtime()))
         model.save_embeddings(args.emb_file)
