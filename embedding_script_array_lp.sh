@@ -33,10 +33,11 @@ method=${methods[$method_id]}
 echo $dataset $dim $seed $method
 
 data_dir=../heat/datasets/${dataset}
-edgelist=${data_dir}/edgelist.tsv
+training_dir=$(printf "../heat/edgelists/${dataset}/seed=%03d/training_edges" ${seed})
+edgelist=${training_dir}/edgelist.tsv
 features=${data_dir}/feats.csv
 labels=${data_dir}/labels.csv
-embedding_dir=embedding_dir=embeddings/${dataset}/nc_experiment/${dim}/${method}/${seed}
+embedding_dir=embedding_dir=embeddings/${dataset}/lp_experiment/${dim}/${method}/${seed}
 
 if [ ! -f embedding_dir/embedding.csv ]
 then
@@ -50,7 +51,7 @@ then
 	args=$(echo --graph-format edgelist --graph-file ${edgelist} --attribute-file ${features} \
 	--save-emb --emb-file ${embedding_dir} --method ${method} --label-file ${labels} --task none --dim ${dim} \
 	--TADW-maxiter ${e} --epochs ${e}) 
-
+	# echo $args
 	python src/main.py $args
 
 
