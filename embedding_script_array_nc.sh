@@ -36,7 +36,7 @@ data_dir=../heat/datasets/${dataset}
 edgelist=${data_dir}/edgelist.tsv
 features=${data_dir}/feats.csv
 labels=${data_dir}/labels.csv
-embedding_dir=embedding_dir=embeddings/${dataset}/nc_experiment/${dim}/${method}/${seed}
+embedding_dir=embeddings/${dataset}/nc_experiment/${dim}/${method}/${seed}
 
 if [ ! -f embedding_dir/embedding.csv ]
 then
