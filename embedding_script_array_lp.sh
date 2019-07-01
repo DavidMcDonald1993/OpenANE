@@ -39,7 +39,7 @@ features=${data_dir}/feats.csv
 labels=${data_dir}/labels.csv
 embedding_dir=embeddings/${dataset}/lp_experiment/${dim}/${method}/${seed}
 
-if [ ! -f embedding_dir/embedding.csv ]
+if [ ! -f ${embedding_dir}/embedding.csv ]
 then
 
 
