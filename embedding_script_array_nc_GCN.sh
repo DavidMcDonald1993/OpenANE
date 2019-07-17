@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name=embeddingsGCNNC
-#SBATCH --output=embeddingsGCN_%A_%a.out
-#SBATCH --error=embeddingsGCN_%A_%a.err
+#SBATCH --output=embeddingsGCNNC_%A_%a.out
+#SBATCH --error=embeddingsGCNNC_%A_%a.err
 #SBATCH --array=0-149
 #SBATCH --time=3-00:00:00
 #SBATCH --ntasks=1
@@ -39,7 +39,7 @@ then
 
 	module purge
 	module load bluebear
-	module load Python/3.6.3-iomkl-2018a
+	module load TensorFlow/1.10.1-foss-2018b-Python-3.6.6
 	pip install --user gensim
 
 	args=$(echo --graph-format edgelist --graph-file ${edgelist} --attribute-file ${features} \

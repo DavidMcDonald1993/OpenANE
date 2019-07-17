@@ -39,7 +39,7 @@ then
 
 	module purge
 	module load bluebear
-	module load Python/3.6.3-iomkl-2018a
+	module load TensorFlow/1.10.1-foss-2018b-Python-3.6.6
 	pip install --user gensim
 
 	args=$(echo --graph-format edgelist --graph-file ${edgelist} --attribute-file ${features} \
