@@ -55,7 +55,7 @@ class WeightedWalker:
         for node in self.nodes:
             walks.append(self.weighted_walk(start_node=node))
         t2 = time.time()
-        print(f'Walk iteration: {walk_iter+1}/{self.num_walks}; time cost: {(t2-t1):.2f}')
+        # print(f'Walk iteration: {walk_iter+1}/{self.num_walks}; time cost: {(t2-t1):.2f}')
         return walks
         
     def weighted_walk(self, start_node):  # more efficient way instead of copy from node2vec
@@ -116,7 +116,7 @@ class BasicWalker:
         for node in self.nodes:
             walks.append(self.deepwalk_walk(start_node=node))
         t2 = time.time()
-        print(f'Walk iteration: {walk_iter+1}/{self.num_walks}; time cost: {(t2-t1):.2f}')
+        # print(f'Walk iteration: {walk_iter+1}/{self.num_walks}; time cost: {(t2-t1):.2f}')
         return walks    
 
 
@@ -134,7 +134,7 @@ class BasicWalker:
         all_walks = pool.map(self.mp_rw_wrapper, range(self.num_walks))
         all_walks = list(chain(*all_walks))
         t2 = time.time()
-        print(f'Time for all random walks: {(t2-t1):.2f}')  # use multiple cores, total time < sum(time@itr)
+        # print(f'Time for all random walks: {(t2-t1):.2f}')  # use multiple cores, total time < sum(time@itr)
         return all_walks
 
 
@@ -184,7 +184,7 @@ class Walker:
         for node in self.nodes:
             walks.append(self.node2vec_walk(start_node=node))
         t2 = time.time()
-        print(f'Walk iteration: {walk_iter+1}/{self.num_walks}; time cost: {(t2-t1):.2f}')
+        # print(f'Walk iteration: {walk_iter+1}/{self.num_walks}; time cost: {(t2-t1):.2f}')
         return walks
 
     def simulate_walks(self, num_walks, walk_length):
@@ -201,7 +201,7 @@ class Walker:
         all_walks = pool.map(self.mp_rw_wrapper, range(self.num_walks))
         all_walks = list(chain(*all_walks))
         t2 = time.time()
-        print(f'Time for all random walks: {(t2-t1):.2f}')  # use multiple cores, total time < sum(time@itr)
+        # print(f'Time for all random walks: {(t2-t1):.2f}')  # use multiple cores, total time < sum(time@itr)
         return all_walks
 
     def get_alias_edge(self, src, dst):
