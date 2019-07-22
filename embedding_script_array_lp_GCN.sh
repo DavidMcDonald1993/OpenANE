@@ -21,7 +21,7 @@ seed_id=$((SLURM_ARRAY_TASK_ID % num_seeds ))
 
 dataset=${datasets[$dataset_id]}
 seed=${seeds[$seed_id]}
-dim=10
+dim=25
 method=sagegcn
 
 echo $dataset $seed
