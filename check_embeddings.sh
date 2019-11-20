@@ -3,7 +3,7 @@ for dataset in cora_ml citeseer ppi pubmed mit
 do
 	for dim in 5 10 25 50
 	do
-		for method in abrw attrpure deepwalk tadw aane 
+		for method in abrw attrpure deepwalk tadw aane sagegcn
 		do
 			for seed in {0..29}
 			do
