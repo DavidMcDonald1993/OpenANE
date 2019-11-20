@@ -19,6 +19,7 @@ from libnrl.downstream import lpClassifier, ncClassifier
 from libnrl.graph import Graph
 from libnrl.utils import generate_edges_for_linkpred, read_node_label_downstream
 
+import math
 
 def parse_args():
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter, conflict_handler='resolve')
@@ -186,10 +187,16 @@ def main(args):
         model = asne.ASNE(graph=g, dim=args.dim, alpha=args.ASNE_lamb, learning_rate=args.learning_rate, batch_size=args.batch_size, epoch=args.epochs, n_neg_samples=10)
     elif args.method == 'sagemean':  # other choices: graphsage_seq, graphsage_maxpool, graphsage_meanpool, n2v
         from libnrl.graphsage import graphsageAPI  # ANE method
-        model = graphsageAPI.graphSAGE(graph=g, sage_model='mean', is_supervised=False)
+        model = graphsageAPI.graphSAGE(graph=g, 
+        dim1=math.ceil(args.dim/2), 
+        dim2=math.ceil(args.dim/2), 
+        sage_model='mean', is_supervised=False)
     elif args.method == 'sagegcn':  # parameters for graphsage models are in 'graphsage' -> '__init__.py'
         from libnrl.graphsage import graphsageAPI  # ANE method
-        model = graphsageAPI.graphSAGE(graph=g, sage_model='gcn', is_supervised=False)
+        model = graphsageAPI.graphSAGE(graph=g, 
+        dim_1=math.ceil(args.dim/2), 
+        dim_2=math.ceil(args.dim/2), 
+        sage_model='gcn', is_supervised=False)
     else:
         print('method not found...')
         exit(0)

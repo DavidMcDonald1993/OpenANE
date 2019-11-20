@@ -13,8 +13,8 @@ log_device_placement = False
 # we follow the opt parameters given by papers GCN and graphSAGE
 # note: citeseer+pubmed all follow the same parameters as cora, see their papers)
 # tensorflow + Adam optimizer + Random weight init + row norm of attr
-dim_1 = 25  # dim = dim1+dim2 = 128 for sage-mean and sage-gcn
-dim_2 = 25
+dim_1 = 64  # dim = dim1+dim2 = 128 for sage-mean and sage-gcn
+dim_2 = 64
 samples_1 = 25
 samples_2 = 10
 

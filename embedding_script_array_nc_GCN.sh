@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#SBATCH --job-name=embeddingsGCNNC
-#SBATCH --output=embeddingsGCNNC_%A_%a.out
-#SBATCH --error=embeddingsGCNNC_%A_%a.err
-#SBATCH --array=0-149
+#SBATCH --job-name=GCNNCembeddings
+#SBATCH --output=GCNNCembeddings_%A_%a.out
+#SBATCH --error=GCNNCembeddings_%A_%a.err
+#SBATCH --array=0-599
 #SBATCH --time=3-00:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=20G
@@ -11,21 +11,26 @@
 e=100
 
 datasets=({cora_ml,citeseer,ppi,pubmed,mit})
-# dim = 5
+dims=(5 10 25 50)
 seeds=({0..29})
+methods=(sagegcn)
 
 num_datasets=${#datasets[@]}
+num_dims=${#dims[@]}
 num_seeds=${#seeds[@]}
+num_methods=${#methods[@]}
 
-dataset_id=$((SLURM_ARRAY_TASK_ID / num_seeds % num_datasets))
-seed_id=$((SLURM_ARRAY_TASK_ID % num_seeds ))
+dataset_id=$((SLURM_ARRAY_TASK_ID / (num_methods * num_seeds * num_dims) % num_datasets))
+dim_id=$((SLURM_ARRAY_TASK_ID / (num_methods * num_seeds) % num_dims))
+seed_id=$((SLURM_ARRAY_TASK_ID / num_methods % num_seeds ))
+method_id=$((SLURM_ARRAY_TASK_ID % (num_methods) ))
 
 dataset=${datasets[$dataset_id]}
+dim=${dims[$dim_id]}
 seed=${seeds[$seed_id]}
-dim=50
-method=sagegcn
+method=${methods[$method_id]}
 
-echo $dataset $seed
+echo $dataset $dim $seed $method
 
 data_dir=../heat/datasets/${dataset}
 edgelist=${data_dir}/edgelist.tsv
@@ -42,11 +47,12 @@ then
 	module load TensorFlow/1.10.1-foss-2018b-Python-3.6.6
 	pip install --user gensim
 
-	args=$(echo --graph-format edgelist --graph-file ${edgelist} --attribute-file ${features} \
-	--save-emb --emb-file ${embedding_dir} --method ${method} --label-file ${labels} --task none --dim ${dim} \
+	args=$(echo --graph-format edgelist --graph-file ${edgelist} \
+	--attribute-file ${features} \
+	--save-emb --emb-file ${embedding_dir} --method ${method} \
+	--label-file ${labels} --task none --dim ${dim} \
 	--TADW-maxiter ${e} --epochs ${e}) 
 
 	python src/main.py $args
-
 
 fi

@@ -79,7 +79,7 @@ def construct_placeholders():
     return placeholders
 
 
-def train(train_data, test_data, model):
+def train(train_data, test_data, model, dim_1, dim_2):
     print('---------- the graphsage model we used: ', model)
     print('---------- parameters we sued: epochs, dim_1+dim_2, samples_1, samples_2, dropout, weight_decay, learning_rate, batch_size',
           epochs, dim_1+dim_2, samples_1, samples_2, dropout, weight_decay, learning_rate, batch_size)
@@ -117,6 +117,7 @@ def train(train_data, test_data, model):
                                    identity_dim=identity_dim,
                                    logging=True)
     elif model == 'gcn':
+
         # Create model
         sampler = UniformNeighborSampler(adj_info)
         layer_infos = [SAGEInfo("node", sampler, samples_1, 2*dim_1),

@@ -17,7 +17,12 @@ from libnrl.graphsage.__init__ import *  # import default parameters
 
 
 class graphSAGE(object):
-    def __init__(self, graph, sage_model='mean', is_supervised=False):
+    def __init__(self, 
+        graph,
+        dim_1,
+        dim_2, 
+        sage_model='mean', 
+        is_supervised=False):
         self.graph = graph
         self.normalize = True  # row normalization of node attributes
         self.num_walks = 50
@@ -29,7 +34,8 @@ class graphSAGE(object):
         self.vectors = None
         if not is_supervised:
             from libnrl.graphsage import unsupervised_train
-            self.vectors = unsupervised_train.train(train_data=train_data, test_data=None, model=sage_model)
+            self.vectors = unsupervised_train.train(train_data=train_data, 
+                test_data=None, model=sage_model, dim_1=dim_1, dim_2=dim_2)
 
     def add_train_val_test_to_G(self, test_perc=0.0, val_perc=0.1):
         ''' add if 'val' and/or 'test' to each node in G '''
@@ -104,9 +110,9 @@ class graphSAGE(object):
     def save_embeddings(self, filename):
         ''' save embeddings to file '''
         fout = open(filename, 'w')
-        node_num = len(self.vectors.keys())
-        emb_dim = len(next(iter(self.vectors.values())))
-        fout.write("{} {}\n".format(node_num, emb_dim))
+        # node_num = len(self.vectors.keys())
+        # emb_dim = len(next(iter(self.vectors.values())))
+        # fout.write("{} {}\n".format(node_num, emb_dim))
         for node, vec in self.vectors.items():
             fout.write("{} {}\n".format(node, ' '.join([str(x) for x in vec])))
         fout.close()
