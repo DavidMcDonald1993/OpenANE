@@ -14,7 +14,7 @@ do
                     edgelist=${data_dir}/edgelist.tsv
                     features=${data_dir}/feats.csv
                     labels=${data_dir}/labels.csv
-                    embedding_dir=embeddings/${dataset}/nc_experiment/${dim}/${method}/${seed}
+                    embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
                     embedding_f=${embedding_dir}/embedding.csv
 
                     if [ ! -f ${embedding_f} ]
