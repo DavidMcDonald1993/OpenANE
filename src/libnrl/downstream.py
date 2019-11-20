@@ -60,6 +60,7 @@ class ncClassifier(object):
             results[average] = f1_score(Y, Y_, average=average)
         print(results)
         return results
+
 class TopKRanker(OneVsRestClassifier):  # orignal LR or SVM is for binary clf
     def predict(self, X, top_k_list):  # re-define predict func of OneVsRestClassifier
         probs = np.asarray(super(TopKRanker, self).predict_proba(X))
@@ -72,7 +73,6 @@ class TopKRanker(OneVsRestClassifier):  # orignal LR or SVM is for binary clf
             probs_[labels] = 1  # reset probs_ to 1 if labels denoted...
             all_labels.append(probs_)
         return np.asarray(all_labels)
-
 
 # ------------------link prediction task---------------------------
 class lpClassifier(object):

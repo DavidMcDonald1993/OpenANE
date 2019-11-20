@@ -1,5 +1,5 @@
 """
-ANE method: Text Associated DeepWalk (TADW)
+ANE method: LINE
 
 modified by Chengbin Hou 2018
 

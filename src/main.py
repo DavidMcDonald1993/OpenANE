@@ -25,11 +25,14 @@ def parse_args():
     # -----------------------------------------------general settings--------------------------------------------------
     parser.add_argument('--graph-format', default='adjlist', choices=['adjlist', 'edgelist'],
                         help='graph/network format')
-    parser.add_argument('--graph-file', default='data/cora/cora_adjlist.txt',
+    parser.add_argument('--graph-file', 
+    # default='data/cora/cora_adjlist.txt',
                         help='graph/network file')
-    parser.add_argument('--attribute-file', default='data/cora/cora_attr.txt',
+    parser.add_argument('--attribute-file', 
+    # default='data/cora/cora_attr.txt',
                         help='node attribute/feature file')
-    parser.add_argument('--label-file', default='data/cora/cora_label.txt',
+    parser.add_argument('--label-file', 
+    # default='data/cora/cora_label.txt',
                         help='node label file')
     parser.add_argument('--dim', default=128, type=int,
                         help='node embeddings dimensions')
