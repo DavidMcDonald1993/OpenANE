@@ -17,10 +17,15 @@ do
                     embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
                     embedding_f=${embedding_dir}/embedding.csv
 
-                    if [ ! -f ${embedding_f} ]
-                    then 
-                        echo no embedding at ${embedding_f}
-                    fi
+                    if [ -f ${embedding_f}.gz ]
+					then
+						continue
+					elif [ -f ${embedding_f} ]
+					then 
+						gzip $embedding_f 
+					else
+						echo no embedding at ${embedding_f}
+				fi
                 done
             done
         done
