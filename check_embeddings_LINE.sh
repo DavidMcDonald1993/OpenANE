@@ -3,11 +3,11 @@ for dataset in cora_ml citeseer ppi pubmed mit
 do
 	for dim in 5 10 25 50
 	do
-		for method in abrw attrpure deepwalk tadw aane sagegcn
+		for method in line
 		do
 			for seed in {0..29}
 			do
-                for exp in nc_experiment lp_experiment
+                for exp in recon_experiment lp_experiment
                 do
 
                     embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}

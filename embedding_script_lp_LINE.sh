@@ -1,19 +1,19 @@
 #!/bin/bash
 
-#SBATCH --job-name=GCNLPembeddings
-#SBATCH --output=GCNLPembeddings_%A_%a.out
-#SBATCH --error=GCNLPembeddings_%A_%a.err
-#SBATCH --array=0-599
+#SBATCH --job-name=LINEembeddingsLP
+#SBATCH --output=LINEembeddingsLP_%A_%a.out
+#SBATCH --error=LINEembeddingsLP_%A_%a.err
+#SBATCH --array=0-749
 #SBATCH --time=3-00:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=20G
 
-e=100
+e=1000
 
-datasets=({cora_ml,citeseer,ppi,pubmed,mit})
-dims=(5 10 25 50)
+datasets=({cora_ml,citeseer,pubmed,wiki_vote,email})
+dims=(2 5 10 25 50)
 seeds=({0..29})
-methods=(sagegcn)
+methods=(line)
 
 num_datasets=${#datasets[@]}
 num_dims=${#dims[@]}
@@ -30,13 +30,7 @@ dim=${dims[$dim_id]}
 seed=${seeds[$seed_id]}
 method=${methods[$method_id]}
 
-echo $dataset $dim $seed $method
-
-data_dir=../heat/datasets/${dataset}
-training_dir=$(printf "../heat/edgelists/${dataset}/seed=%03d/training_edges" ${seed})
-edgelist=${training_dir}/edgelist.tsv
-features=${data_dir}/feats.csv
-labels=${data_dir}/labels.csv
+edgelist=$(printf ../HEDNet/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv ${seed})
 embedding_dir=embeddings/${dataset}/lp_experiment/${dim}/${method}/${seed}
 
 if [ ! -f ${embedding_dir}/embedding.csv.gz ]
@@ -44,15 +38,15 @@ then
 
 	module purge
 	module load bluebear
-	module load TensorFlow/1.10.1-foss-2018b-Python-3.6.6
+	module load Python/3.6.3-iomkl-2018a
 	pip install --user gensim
 
 	args=$(echo --graph-format edgelist --graph-file ${edgelist} \
-	--attribute-file ${features} \
 	--save-emb --emb-file ${embedding_dir} --method ${method} \
-	--label-file ${labels} --task none --dim ${dim} \
-	--TADW-maxiter ${e} --epochs ${e}) 
-	python src/main.py $args
+	--task none --dim ${dim} \
+	--LINE-order 2 --LINE-negative-ratio 10 --epochs ${e}) 
 
+	python src/main.py $args
+	gzip ${embedding_dir}/embedding.csv
 
 fi

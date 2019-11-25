@@ -110,7 +110,7 @@ class TADW(object):
 
     def save_embeddings(self, filename):
         fout = open(filename, 'w')
-        node_num = len(self.vectors.keys())
+        # node_num = len(self.vectors.keys())
         # fout.write("{} {}\n".format(node_num, self.dim))
         for node, vec in self.vectors.items():
             fout.write("{} {}\n".format(node, ' '.join([str(x) for x in vec])))
