@@ -54,5 +54,5 @@ then
 	--TADW-maxiter ${e} --epochs ${e}) 
 	python src/main.py $args
 
-
+	gzip ${embedding_dir}/embedding.csv
 fi

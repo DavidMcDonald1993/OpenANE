@@ -55,4 +55,7 @@ then
 
 	python src/main.py $args
 
+	gzip ${embedding_dir}/embedding.csv
+
+
 fi
