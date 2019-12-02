@@ -1,5 +1,5 @@
 #!/bin/bash
-for dataset in cora_ml citeseer ppi wiki_vote email
+for dataset in {00..29}
 do
 	for dim in 2 5 10 25 50
 	do
@@ -10,7 +10,7 @@ do
                 for exp in recon_experiment lp_experiment
                 do
 
-                    embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
+                    embedding_dir=embeddings/synthetic_scale_free/${dataset}/${exp}/${dim}/${method}/${seed}
                     embedding_f=${embedding_dir}/embedding.csv
 
                     if [ -f ${embedding_f}.gz ]
