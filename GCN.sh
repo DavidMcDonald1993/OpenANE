@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#SBATCH --job-name=GCNNCembeddings
-#SBATCH --output=GCNNCembeddings_%A_%a.out
-#SBATCH --error=GCNNCembeddings_%A_%a.err
-#SBATCH --array=0-599
-#SBATCH --time=3-00:00:00
+#SBATCH --job-name=GCNembeddings
+#SBATCH --output=GCNembeddings_%A_%a.out
+#SBATCH --error=GCNembeddings_%A_%a.err
+#SBATCH --array=0-1199
+#SBATCH --time=10-00:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=20G
 
@@ -14,29 +14,39 @@ datasets=({cora_ml,citeseer,ppi,pubmed,mit})
 dims=(5 10 25 50)
 seeds=({0..29})
 methods=(sagegcn)
+exps=(nc_experiment,lp_experiment)
 
 num_datasets=${#datasets[@]}
 num_dims=${#dims[@]}
 num_seeds=${#seeds[@]}
 num_methods=${#methods[@]}
+num_exps=${#exps[@]}
 
-dataset_id=$((SLURM_ARRAY_TASK_ID / (num_methods * num_seeds * num_dims) % num_datasets))
-dim_id=$((SLURM_ARRAY_TASK_ID / (num_methods * num_seeds) % num_dims))
-seed_id=$((SLURM_ARRAY_TASK_ID / num_methods % num_seeds ))
-method_id=$((SLURM_ARRAY_TASK_ID % (num_methods) ))
+dataset_id=$((SLURM_ARRAY_TASK_ID / (num_exps * num_methods * num_seeds * num_dims) % num_datasets))
+dim_id=$((SLURM_ARRAY_TASK_ID / (num_exps * num_methods * num_seeds) % num_dims))
+seed_id=$((SLURM_ARRAY_TASK_ID / (num_exps * num_methods) % num_seeds))
+method_id=$((SLURM_ARRAY_TASK_ID / num_exps % num_methods))
+exp_id=$((SLURM_ARRAY_TASK_ID % num_exps))
 
 dataset=${datasets[$dataset_id]}
 dim=${dims[$dim_id]}
 seed=${seeds[$seed_id]}
 method=${methods[$method_id]}
+exp=${exps[$exp_id]}
 
-echo $dataset $dim $seed $method
+echo $dataset $dim $seed $method $exp
 
 data_dir=../heat/datasets/${dataset}
-edgelist=${data_dir}/edgelist.tsv
+if [ $exp == "nc_experiment" ]
+then
+	edgelist=${data_dir}/edgelist.tsv
+else
+	training_dir=$(printf "../heat/edgelists/${dataset}/seed=%03d/training_edges" ${seed})
+	edgelist=${training_dir}/edgelist.tsv
+fi
 features=${data_dir}/feats.csv
 labels=${data_dir}/labels.csv
-embedding_dir=embeddings/${dataset}/nc_experiment/${dim}/${method}/${seed}
+embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
 
 if [ ! -f ${embedding_dir}/embedding.csv.gz ]
 then
@@ -56,6 +66,5 @@ then
 	python src/main.py $args
 
 	gzip ${embedding_dir}/embedding.csv
-
 
 fi
