@@ -24,7 +24,8 @@ def main():
         try:
             df = pd.read_csv(filename)
         except EmptyDataError:
-            print (filename, "is empty")
+            print (filename, "is empty removing it")
+            os.remove(filename)
         except IOError:
             print (filename, "does not exist")
 
