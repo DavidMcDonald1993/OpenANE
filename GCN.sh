@@ -14,7 +14,7 @@ datasets=({cora_ml,citeseer,ppi,pubmed,mit})
 dims=(5 10 25 50)
 seeds=({0..29})
 methods=(sagegcn)
-exps=(nc_experiment,lp_experiment)
+exps=(nc_experiment lp_experiment)
 
 num_datasets=${#datasets[@]}
 num_dims=${#dims[@]}
@@ -47,6 +47,8 @@ fi
 features=${data_dir}/feats.csv
 labels=${data_dir}/labels.csv
 embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
+
+echo embedding directory is $embedding_dir
 
 if [ ! -f ${embedding_dir}/embedding.csv.gz ]
 then
