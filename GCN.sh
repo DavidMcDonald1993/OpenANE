@@ -69,4 +69,8 @@ then
 
 	gzip ${embedding_dir}/embedding.csv
 
+else
+
+	echo ${embedding_dir}/embedding.csv.gz already exists
+
 fi
