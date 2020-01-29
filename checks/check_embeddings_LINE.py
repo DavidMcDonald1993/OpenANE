@@ -6,11 +6,11 @@ from pandas.errors import EmptyDataError
 
 def main():
 
-    datasets = ["cora_ml", "citeseer", "ppi", "pubmed", "mit"]
-    dims = ["5", "10", "25", "50"]
-    methods = ["abrw", "attrpure", "deepwalk", "tadw", "aane", "sagegcn"]
+    datasets = ["cora_ml", "citeseer", "ppi", "wiki_vote", "email"]
+    dims = ["2", "5", "10", "25", "50"]
+    methods = ["line"]
     seeds = [str(x) for x in range(30)]
-    exps = ["nc_experiment", "lp_experiment"]
+    exps = ["recon_experiment", "lp_experiment"]
 
     for dataset, dim, method, seed, exp in itertools.product(
         datasets, dims, methods, seeds, exps
