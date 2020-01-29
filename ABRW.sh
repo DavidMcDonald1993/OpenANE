@@ -1,19 +1,19 @@
 #!/bin/bash
 
-#SBATCH --job-name=GCNembeddings
-#SBATCH --output=GCNembeddings_%A_%a.out
-#SBATCH --error=GCNembeddings_%A_%a.err
-#SBATCH --array=0-719
+#SBATCH --job-name=ABRWembeddings
+#SBATCH --output=ABRWembeddings_%A_%a.out
+#SBATCH --error=ABRWembeddings_%A_%a.err
+#SBATCH --array=0-239
 #SBATCH --time=10-00:00:00
 #SBATCH --ntasks=1
-#SBATCH --mem=20G
+#SBATCH --mem=30G
 
 e=100
 
-datasets=(cora_ml citeseer mit)
+datasets=(pubmed)
 dims=(5 10 25 50)
 seeds=({0..29})
-methods=(sagegcn)
+methods=(abrw)
 exps=(nc_experiment lp_experiment)
 
 num_datasets=${#datasets[@]}
