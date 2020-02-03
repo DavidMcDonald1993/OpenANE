@@ -46,6 +46,8 @@ embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
 if [ ! -f ${embedding_dir}/embedding.csv.gz ]
 then
 
+	echo ${embedding_dir}/embedding.csv.gz does not exist
+
 	module purge
 	module load bluebear
 
@@ -64,6 +66,8 @@ then
 		python src/main.py $args
 
 	fi
+
+	echo "embedding complete -- compressing"
 
 	gzip ${embedding_dir}/embedding.csv
 
