@@ -48,15 +48,23 @@ then
 
 	module purge
 	module load bluebear
-	module load Python/3.6.3-iomkl-2018a
-	pip install --user gensim tensorflow
 
-	args=$(echo --graph-format edgelist --graph-file ${edgelist} \
-	--save-emb --emb-file ${embedding_dir} --method ${method} \
-	--task none --dim ${dim} \
-	--LINE-order 2 --LINE-negative-ratio 10 --epochs ${e}) 
+	if [ ! -f ${embedding_dir}/embedding.csv ]
+	then
 
-	python src/main.py $args
+
+		module load Python/3.6.3-iomkl-2018a
+		pip install --user gensim tensorflow
+
+		args=$(echo --graph-format edgelist --graph-file ${edgelist} \
+		--save-emb --emb-file ${embedding_dir} --method ${method} \
+		--task none --dim ${dim} \
+		--LINE-order 2 --LINE-negative-ratio 10 --epochs ${e}) 
+
+		python src/main.py $args
+
+	fi
+
 	gzip ${embedding_dir}/embedding.csv
 
 fi
