@@ -55,7 +55,8 @@ then
 	then
 
 
-		module load Python/3.6.3-iomkl-2018a
+		# module load Python/3.6.3-iomkl-2018a
+		module load future/0.16.0-foss-2018b-Python-3.6.6
 		pip install --user gensim tensorflow
 
 		args=$(echo --graph-format edgelist --graph-file ${edgelist} \
@@ -70,5 +71,9 @@ then
 	echo "embedding complete -- compressing"
 
 	gzip ${embedding_dir}/embedding.csv
+
+else
+
+	echo ${embedding_dir}/embedding.csv.gz already exists
 
 fi

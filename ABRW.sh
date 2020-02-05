@@ -6,7 +6,7 @@
 #SBATCH --array=0-239
 #SBATCH --time=10-00:00:00
 #SBATCH --ntasks=1
-#SBATCH --mem=30G
+#SBATCH --mem=50G
 
 e=100
 
@@ -50,22 +50,33 @@ embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
 
 echo embedding directory is $embedding_dir
 
+
 if [ ! -f ${embedding_dir}/embedding.csv.gz ]
 then
 
+	echo ${embedding_dir}/embedding.csv.gz does not exist
 
 	module purge
 	module load bluebear
-	module load TensorFlow/1.10.1-foss-2018b-Python-3.6.6
-	pip install --user gensim
 
-	args=$(echo --graph-format edgelist --graph-file ${edgelist} \
-	--attribute-file ${features} \
-	--save-emb --emb-file ${embedding_dir} --method ${method} \
-	--label-file ${labels} --task none --dim ${dim} \
-	--TADW-maxiter ${e} --epochs ${e}) 
+	if [ ! -f ${embedding_dir}/embedding.csv ]
+	then
 
-	python src/main.py $args
+		module purge
+		module load bluebear
+		module load TensorFlow/1.10.1-foss-2018b-Python-3.6.6
+		pip install --user gensim
+
+		args=$(echo --graph-format edgelist --graph-file ${edgelist} \
+		--attribute-file ${features} \
+		--save-emb --emb-file ${embedding_dir} --method ${method} \
+		--label-file ${labels} --task none --dim ${dim} \
+		--TADW-maxiter ${e} --epochs ${e}) 
+
+		python src/main.py $args
+	fi
+
+	echo "embedding complete -- compressing"
 
 	gzip ${embedding_dir}/embedding.csv
 
