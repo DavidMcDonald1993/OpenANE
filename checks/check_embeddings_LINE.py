@@ -6,7 +6,7 @@ from pandas.errors import EmptyDataError
 
 def main():
 
-    datasets = ["cora_ml", "citeseer", "ppi", "wiki_vote", "email"]
+    datasets = ["cora_ml", "citeseer", "pubmed", "wiki_vote", "email"]
     dims = ["2", "5", "10", "25", "50"]
     methods = ["line"]
     seeds = ["{:02d}".format(x) for x in range(30)]
@@ -22,7 +22,7 @@ def main():
         filename = os.path.join(embedding_directory, "embedding.csv.gz")
 
         try:
-            pd.read_csv(filename)
+            pd.read_csv(filename, index_col=0)
         except EmptyDataError:
             print (filename, "is empty removing it")
             os.remove(filename)
