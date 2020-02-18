@@ -9,7 +9,7 @@ def main():
     datasets = ["cora_ml", "citeseer", "ppi", "wiki_vote", "email"]
     dims = ["2", "5", "10", "25", "50"]
     methods = ["line"]
-    seeds = [str(x) for x in range(30)]
+    seeds = ["{:02d}".format(x) for x in range(30)]
     exps = ["recon_experiment", "lp_experiment"]
 
     for dataset, dim, method, seed, exp in itertools.product(

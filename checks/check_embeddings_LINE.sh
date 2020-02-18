@@ -5,7 +5,7 @@ do
 	do
 		for method in line
 		do
-			for seed in {0..29}
+			for seed in {00..29}
 			do
                 for exp in recon_experiment lp_experiment
                 do
