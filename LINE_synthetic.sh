@@ -36,7 +36,7 @@ exp=${exps[$exp_id]}
 
 if [ $exp == "recon_experiment" ]
 then 
-	edgelist=../HEDNet/datasets/${dataset}/edgelist.tsv
+	edgelist=../HEDNet/datasets/${dataset}/edgelist.tsv.gz
 else
 	edgelist=$(printf ../HEDNet/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv ${seed})
 fi 

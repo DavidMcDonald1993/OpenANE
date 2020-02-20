@@ -39,7 +39,7 @@ echo $dataset $dim $seed $method $exp
 data_dir=../heat/datasets/${dataset}
 if [ $exp == "nc_experiment" ]
 then
-	edgelist=${data_dir}/edgelist.tsv
+	edgelist=${data_dir}/edgelist.tsv.gz
 else
 	training_dir=$(printf "../heat/edgelists/${dataset}/seed=%03d/training_edges" ${seed})
 	edgelist=${training_dir}/edgelist.tsv
