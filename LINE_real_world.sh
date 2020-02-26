@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=LINEembeddingsREALWORLD
-#SBATCH --output=LINEembeddingsREALWORLD_%A_%a.out
-#SBATCH --error=LINEembeddingsREALWORLD_%A_%a.err
+#SBATCH --job-name=LINEREALWORLD
+#SBATCH --output=LINEREALWORLD_%A_%a.out
+#SBATCH --error=LINEREALWORLD_%A_%a.err
 #SBATCH --array=0-1499
 #SBATCH --time=10-00:00:00
 #SBATCH --ntasks=1
-#SBATCH --mem=25G
+#SBATCH --mem=5G
 
 e=25
 
