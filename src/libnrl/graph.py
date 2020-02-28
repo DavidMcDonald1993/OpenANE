@@ -12,6 +12,7 @@ import networkx as nx
 import numpy as np
 import scipy.sparse as sp
 
+import pandas as pd 
 
 class Graph(object):
     def __init__(self):
@@ -72,10 +73,16 @@ class Graph(object):
             input file format: node_id1 attr1 attr2 ... attrM \n
                                node_id2 attr1 attr2 ... attrM \n
         """
-        with open(path, 'r') as fin:
-            for l in fin.readlines()[1:]:
-                vec = l.split(",")
-                self.G.node[vec[0]]['attr'] = np.array([float(x) for x in vec[1:]])
+        print ("reading node attributes from", path)
+        if path.endswith(".gz"):
+            attribute_df = pd.read_csv(path, index_col=0, sep=",")
+            for i, row in attribute_df.iterrows():
+                self.G.node[str(i)]['attr'] = row.values
+        else:
+            with open(path, 'r') as fin:
+                for l in fin.readlines()[1:]:
+                    vec = l.split(",")
+                    self.G.node[vec[0]]['attr'] = np.array([float(x) for x in vec[1:]])
 
     def remove_edge(self, ratio=0.0):
         """ randomly remove edges/links \n

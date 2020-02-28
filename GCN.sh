@@ -1,17 +1,17 @@
 #!/bin/bash
 
-#SBATCH --job-name=GCNembeddings
-#SBATCH --output=GCNembeddings_%A_%a.out
-#SBATCH --error=GCNembeddings_%A_%a.err
-#SBATCH --array=0-719
+#SBATCH --job-name=GCN
+#SBATCH --output=GCN_%A_%a.out
+#SBATCH --error=GCN_%A_%a.err
+#SBATCH --array=0-1499
 #SBATCH --time=10-00:00:00
 #SBATCH --ntasks=1
-#SBATCH --mem=20G
+#SBATCH --mem=5G
 
 e=100
 
-datasets=(cora_ml citeseer mit)
-dims=(5 10 25 50)
+datasets=(cora_ml citeseer ppi pubmed mit)
+dims=(2 5 10 25 50)
 seeds=({0..29})
 methods=(sagegcn)
 exps=(nc_experiment lp_experiment)
@@ -44,8 +44,7 @@ else
 	training_dir=$(printf "../heat/edgelists/${dataset}/seed=%03d/training_edges" ${seed})
 	edgelist=${training_dir}/edgelist.tsv
 fi
-features=${data_dir}/feats.csv
-labels=${data_dir}/labels.csv
+features=${data_dir}/feats.csv.gz
 embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}
 
 echo embedding directory is $embedding_dir
@@ -62,7 +61,7 @@ then
 	args=$(echo --graph-format edgelist --graph-file ${edgelist} \
 	--attribute-file ${features} \
 	--save-emb --emb-file ${embedding_dir} --method ${method} \
-	--label-file ${labels} --task none --dim ${dim} \
+	--task none --dim ${dim} \
 	--TADW-maxiter ${e} --epochs ${e}) 
 
 	python src/main.py $args

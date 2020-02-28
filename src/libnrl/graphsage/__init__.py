@@ -19,7 +19,7 @@ samples_1 = 25
 samples_2 = 10
 
 # key parameters during training
-epochs = 100
+epochs = 20
 learning_rate = 0.001  # search [0.01, 0.001, 0.0001, 0.00001]
 dropout = 0.5
 weight_decay = 5e-4
