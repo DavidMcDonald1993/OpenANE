@@ -91,7 +91,7 @@ def parse_args():
                         help='length of each random walk')
     parser.add_argument('--window-size', default=10, type=int,
                         help='window size of skipgram model')
-    parser.add_argument('--workers', default=24, type=int,
+    parser.add_argument('--workers', default=3, type=int,
                         help='# of parallel processes.')
     # for deep learning based methods; parameters about layers and neurons used are not specified here
     parser.add_argument('--learning-rate', default=0.001, type=float,
