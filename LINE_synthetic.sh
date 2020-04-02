@@ -3,15 +3,15 @@
 #SBATCH --job-name=LINEembeddingsSYNTHETIC
 #SBATCH --output=LINEembeddingsSYNTHETIC_%A_%a.out
 #SBATCH --error=LINEembeddingsSYNTHETIC_%A_%a.err
-#SBATCH --array=0-299
+#SBATCH --array=0-239
 #SBATCH --time=3-00:00:00
 #SBATCH --ntasks=1
-#SBATCH --mem=20G
+#SBATCH --mem=1G
 
 e=1000
 
 datasets=({00..29})
-dims=(2 5 10 25 50)
+dims=(10 20 50 100)
 seeds=(0)
 methods=(line)
 exps=(lp_experiment recon_experiment)

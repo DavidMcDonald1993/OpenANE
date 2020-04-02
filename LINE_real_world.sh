@@ -3,15 +3,15 @@
 #SBATCH --job-name=LINEREALWORLD
 #SBATCH --output=LINEREALWORLD_%A_%a.out
 #SBATCH --error=LINEREALWORLD_%A_%a.err
-#SBATCH --array=0-1499
+#SBATCH --array=0-1199
 #SBATCH --time=10-00:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=5G
 
 e=25
 
-datasets=(cora_ml citeseer pubmed wiki_vote email)
-dims=(2 5 10 25 50)
+datasets=(cora_ml citeseer pubmed wiki_vote cora)
+dims=(10 20 50 100)
 seeds=({0..29})
 methods=(line)
 exps=(lp_experiment recon_experiment)
