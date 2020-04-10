@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --mem=5G
 
-e=25
+e=1000
 
 datasets=(cora_ml citeseer pubmed wiki_vote cora)
 dims=(10 20 50 100)
@@ -21,7 +21,6 @@ num_dims=${#dims[@]}
 num_seeds=${#seeds[@]}
 num_methods=${#methods[@]}
 num_exps=${#exps[@]}
-
 
 dataset_id=$((SLURM_ARRAY_TASK_ID / (num_exps * num_methods * num_seeds * num_dims) % num_datasets))
 dim_id=$((SLURM_ARRAY_TASK_ID / (num_exps * num_methods * num_seeds) % num_dims))
