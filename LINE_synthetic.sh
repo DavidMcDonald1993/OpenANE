@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=LINEembeddingsSYNTHETIC
-#SBATCH --output=LINEembeddingsSYNTHETIC_%A_%a.out
-#SBATCH --error=LINEembeddingsSYNTHETIC_%A_%a.err
+#SBATCH --job-name=LINESYNTHETIC
+#SBATCH --output=LINESYNTHETIC_%A_%a.out
+#SBATCH --error=LINESYNTHETIC_%A_%a.err
 #SBATCH --array=0-239
 #SBATCH --time=3-00:00:00
 #SBATCH --ntasks=1
@@ -14,7 +14,7 @@ datasets=({00..29})
 dims=(10 20 50 100)
 seeds=(0)
 methods=(line)
-exps=(lp_experiment recon_experiment)
+exps=(recon_experiment lp_experiment)
 
 num_datasets=${#datasets[@]}
 num_dims=${#dims[@]}
@@ -36,9 +36,9 @@ exp=${exps[$exp_id]}
 
 if [ $exp == "recon_experiment" ]
 then 
-	edgelist=../HEDNet/datasets/${dataset}/edgelist.tsv.gz
+	edgelist=../HEADNET/datasets/${dataset}/edgelist.tsv.gz
 else
-	edgelist=$(printf ../HEDNet/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv ${seed})
+	edgelist=$(printf ../HEADNET/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv ${seed})
 fi 
 echo edgelist is $edgelist
 embedding_dir=embeddings/${dataset}/${exp}/${dim}/${method}/${seed}

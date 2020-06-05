@@ -14,7 +14,7 @@ datasets=(cora_ml citeseer pubmed wiki_vote cora)
 dims=(10 20 50 100)
 seeds=({0..29})
 methods=(line)
-exps=(lp_experiment recon_experiment)
+exps=(recon_experiment lp_experiment)
 
 num_datasets=${#datasets[@]}
 num_dims=${#dims[@]}
@@ -38,9 +38,9 @@ echo ${SLURM_ARRAY_TASK_ID} ${dataset} ${dim} ${seed} ${method} ${exp}
 
 if [ $exp == "recon_experiment" ]
 then 
-	edgelist=../HEDNet/datasets/${dataset}/edgelist.tsv.gz
+	edgelist=../HEADNET/datasets/${dataset}/edgelist.tsv.gz
 else
-	edgelist=$(printf ../HEDNet/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv ${seed} )
+	edgelist=$(printf ../HEADNET/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv ${seed} )
 fi 
 echo edgelist is $edgelist
 
