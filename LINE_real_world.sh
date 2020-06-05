@@ -40,7 +40,7 @@ if [ $exp == "recon_experiment" ]
 then 
 	edgelist=../HEADNET/datasets/${dataset}/edgelist.tsv.gz
 else
-	edgelist=$(printf ../HEADNET/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv ${seed} )
+	edgelist=$(printf ../HEADNET/edgelists/${dataset}/seed=%03d/training_edges/edgelist.tsv.gz ${seed} )
 fi 
 echo edgelist is $edgelist
 
